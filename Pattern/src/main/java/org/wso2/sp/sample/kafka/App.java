@@ -36,14 +36,14 @@ public class App {
 
     public static void main(String[] args) {
         String siddhiApp =
-                "@source(type='kafka', topic.list='kafka_topic', partition.no.list='0', threading"
+                "@source(type='kafka', topic.list='kafka_pattern', partition.no.list='0', threading"
                         + ".option='single.thread', group.id=\"group\", bootstrap.servers='localhost:9092', @map"
                         + "(type='json'))\n"
                         + "\n"
                         + "define stream inputStream(SerialNo int, price double, deviceId string, weight double, "
                         + "timeStamp long);\n"
                         + "\n"
-                        + "@sink(type='kafka', topic='kafka_result_topic', bootstrap.servers='localhost:9092', "
+                        + "@sink(type='kafka', topic='kafka_result_pattern', bootstrap.servers='localhost:9092', "
                         + "partition.no='0', @map(type='json'))\n"
                         + "define stream outputStream(SerialNo1 long, SerialNo2 long, deviceId1 string, "
                         + "finalPrice double, timeStamp long);\n"

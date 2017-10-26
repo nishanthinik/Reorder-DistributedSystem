@@ -28,7 +28,7 @@ public class DataReceiver extends Thread {
 
     public static void main(String[] args) {
 
-        KafkaReceiver kafkaReceiver = new KafkaReceiver(eventsList, "kafka_result_topic", 0);
+        KafkaReceiver kafkaReceiver = new KafkaReceiver(eventsList, "kafka_result_pattern", 0);
         kafkaReceiver.start();
 //        Order order = new Order(eventsList);
 //        order.start();

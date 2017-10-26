@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.app.kafka;
+package org.wso2.join.app.kafka;
 
 import org.apache.log4j.Logger;
 

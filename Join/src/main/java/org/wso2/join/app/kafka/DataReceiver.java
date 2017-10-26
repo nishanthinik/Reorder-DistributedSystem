@@ -16,29 +16,19 @@
  * under the License.
  */
 
-package org.wso2.app.query;
+package org.wso2.join.app.kafka;
 
-import org.apache.log4j.Logger;
-import org.wso2.siddhi.core.SiddhiAppRuntime;
-import org.wso2.siddhi.core.SiddhiManager;
-
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * Sample Siddi App1.
+ * DataProducerMain Class for kafka.
  */
-public class App extends Thread {
-    private static final Logger log = Logger.getLogger(App.class);
-    private String siddhiApp;
+public class DataReceiver extends Thread {
+    private static volatile LinkedBlockingQueue<String> messagesList1 = new LinkedBlockingQueue<>();
 
-    App(String siddhiApp) {
-        this.siddhiApp = siddhiApp;
+    public static void main(String[] args) {
+        KafkaReceiver kafkaReceiver = new KafkaReceiver(messagesList1, "kafka_result_join", 0);
+        kafkaReceiver.start();
 
-    }
-
-    public void run() {
-
-        SiddhiManager siddhiManager = new SiddhiManager();
-        SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(siddhiApp);
-        siddhiAppRuntime.start();
     }
 }

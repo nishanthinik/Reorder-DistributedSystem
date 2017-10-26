@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package main.java.org.wso2.output.test;
+package org.wso2.output.test;
 
 import com.google.common.base.Charsets;
 import org.apache.log4j.Logger;

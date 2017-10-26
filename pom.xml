@@ -15,7 +15,7 @@
 
     <modules>
         <module>Pattern</module>
-        <module>FilterandAggregations</module>
+        <module>Filter-Aggregations</module>
         <module>Join</module>
     </modules>
 

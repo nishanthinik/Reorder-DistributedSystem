@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package main.java.org.wso2.output.test;
+package org.wso2.output.test;
 
 import com.google.common.base.Charsets;
 import org.apache.log4j.Logger;
@@ -24,7 +24,6 @@ import org.apache.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -34,8 +33,8 @@ import java.io.InputStreamReader;
 public class TestOutput {
     private static final Logger log = Logger.getLogger(TestOutput.class);
 
-    private static String filePath = "/home/nishanthini/Project/SampleTh/Siddhi4_Sample1"
-            + "/a.txt";
+    private static String filePath = "/home/nishanthini/Project/MyProject/Reorder-DistributedSystem/Join"
+            + "/x.txt";
 
 
     public static void main(String[] args) {
@@ -43,26 +42,29 @@ public class TestOutput {
         try {
             String line;
             String[] events1, serialNo1;
-            float s1;
+            double s1, cmp = 0;
 
             FileInputStream fstream = new FileInputStream(filePath);
             bufferedReader = new BufferedReader(new InputStreamReader(fstream, Charsets.UTF_8));
 
 
-            float i = 0;
+            int i = 0;
             while ((line = bufferedReader.readLine()) != null) {
-                i++;
 
                 events1 = line.split(",");
-                serialNo1 = events1[0].split("\"");
-                s1 = Float.parseFloat(serialNo1[5]);
+                serialNo1 = events1[0].split(":");
+                s1 = Double.parseDouble(serialNo1[2]);
 
-                if ((i - s1) == 0) {
+                if (i == 0) {
                     log.info("Ok" + s1);
-                } else {
+                    cmp = s1;
+                } else if (cmp < s1) {
+                    log.info("Ok" + s1);
+                } else if (cmp > s1) {
                     log.info("Error Found. Not In order" + s1);
                     break;
                 }
+                i++;
 
             }
         } catch (FileNotFoundException e) {

@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.app.kafka;
+package org.wso2.join.app.kafka;
 
 
 import org.apache.log4j.Logger;
@@ -70,7 +70,7 @@ public class DataGenerator extends Thread {
 
             try {
                 messagesList.put(jsonMain.toString());
-                        Thread.sleep(1);
+                        Thread.sleep(2);
 //                        if (sleepTime >= 1000) {
 //
 //                            sleepTime = 0;

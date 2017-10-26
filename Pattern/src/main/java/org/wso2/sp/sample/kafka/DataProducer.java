@@ -27,7 +27,7 @@ public class DataProducer extends Thread {
     private static volatile LinkedBlockingQueue<String> messagesList = new LinkedBlockingQueue<>();
 
     public static void main(String[] args) {
-        String topicName = "kafka_topic";
+        String topicName = "kafka_pattern";
 
         DataGenerator dataGenerator = new DataGenerator(messagesList);
         KafkaProducer2 kafkaProducer = new KafkaProducer2(messagesList, topicName);
@@ -35,17 +35,5 @@ public class DataProducer extends Thread {
         dataGenerator.start();
         kafkaProducer.start();
 
-//        String topicName2 = "kafka_topic_2";
-//        String topicName1 = "kafka_topic_1";
-
-//        DataGenerator dataGenerator = new DataGenerator(messagesList2);
-//        DataLoader dataLoader = new DataLoader(messagesList1);
-//        KafkaProducer2 kafkaProducer2 = new KafkaProducer2(messagesList2, topicName2);
-//        KafkaProducer2 kafkaProducer1 = new KafkaProducer2(messagesList1, topicName1);
-//
-//        dataGenerator.start();
-//        dataLoader.start();
-//        kafkaProducer2.start();
-//        kafkaProducer1.start();
     }
 }

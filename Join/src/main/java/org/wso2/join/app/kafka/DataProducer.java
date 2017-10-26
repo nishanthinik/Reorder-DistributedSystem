@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.app.kafka;
+package org.wso2.join.app.kafka;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -28,13 +28,17 @@ public class DataProducer extends Thread {
     private static volatile LinkedBlockingQueue<String> messagesList2 = new LinkedBlockingQueue<>();
 
     public static void main(String[] args) {
-        String topicName = "kafka_topic3";
+        String topicName = "kafka_topic";
 
-        DataGenerator dataLoader = new DataGenerator(messagesList1);
-        KafkaProducer2 kafkaProducer1 = new KafkaProducer2(messagesList1, topicName, 5);
-        KafkaProducer2 kafkaProducer2 = new KafkaProducer2(messagesList2, topicName, 5);
+        DataGenerator dataGenerator = new DataGenerator(messagesList1);
+        DataGenerator2 dataGenerator2 = new DataGenerator2(messagesList2);
 
-        dataLoader.start();
+        KafkaProducer2 kafkaProducer1 = new KafkaProducer2(messagesList1, topicName, 0);
+        KafkaProducer2 kafkaProducer2 = new KafkaProducer2(messagesList2, "kafka_top", 0);
+
+        dataGenerator.start();
+        dataGenerator2.start();
+
         kafkaProducer1.start();
         kafkaProducer2.start();
     }
