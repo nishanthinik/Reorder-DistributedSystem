@@ -28,12 +28,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Data loader for EDGAR log files.
+ * Output Tester for EDGAR log files.
  */
 public class TestOutput1 {
     private static final Logger log = Logger.getLogger(TestOutput1.class);
 
-    private static String filePath = "/home/nishanthini/Project/SampleTh/Siddhi4_Sample1"
+    private static String filePath = "/home/nishanthini/Project/MyProject/Reorder-DistributedSystem/Filter-Aggregations"
             + "/a.txt";
 
 
@@ -57,12 +57,13 @@ public class TestOutput1 {
                 s1 = Integer.parseInt(serialNo1[2]);
 
                 if (i == 0) {
-                    log.info("Ok" + s1);
+                    log.info("Ok - " + s1);
                     cmp = s1;
                 } else if (cmp < s1) {
-                    log.info("Ok" + s1);
+                    log.info("Ok - " + s1);
+                    cmp = s1;
                 } else if (cmp > s1) {
-                    log.info("Error Found. Not In order" + s1);
+                    log.info("Error Found. Not In order " + s1);
                     break;
                 }
                 i++;

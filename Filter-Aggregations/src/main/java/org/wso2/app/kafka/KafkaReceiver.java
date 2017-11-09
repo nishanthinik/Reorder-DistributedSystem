@@ -73,9 +73,9 @@ public class KafkaReceiver extends Thread {
                 for (ConsumerRecord record : records) {
                     String event = record.value().toString();
                     eventsList.put(event);
-                    if (topicName.compareToIgnoreCase("kafka_result0") == 0) {
-//                        log.info("PartionNo  " + pNo + " : " + event + " TOPIC --" + topicName + "   " + pNo);
-                    }
+//                    if (topicName.compareToIgnoreCase("kafka_result_topic") == 0) {
+////                        log.info("PartionNo  " + pNo + " : " + event + " TOPIC --" + topicName + "   " + pNo);
+//                    }
 
                 }
             } catch (InterruptedException e1) {

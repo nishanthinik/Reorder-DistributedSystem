@@ -121,7 +121,7 @@ public class SiddhiSampleApp1 {
                         + "partition with( deviceId of inputStream)\n"
                         + "begin\n"
                         + "from inputStream#window.lengthBatch(10)\n"
-                        + "select SerialNo, deviceId, time:timestampInMilliseconds() as timeStamp, sum(price) as "
+                        + "select SerialNo, deviceId,  timeStamp, sum(price) as "
                         + "price, weight\n"
                         + "insert into outputStream\n"
                         + "end;";
@@ -146,7 +146,7 @@ public class SiddhiSampleApp1 {
                         + "insert into#tempStream;\n"
                         + "\n"
                         + "from#tempStream#window.length(10)\n"
-                        + "select SerialNo, deviceId, time:timestampInMilliseconds() as timeStamp, max(price) as "
+                        + "select SerialNo, deviceId,  timeStamp, max(price) as "
                         + "Price, weight\n"
                         + "insert into outputStream;\n"
                         + "end;";
@@ -169,7 +169,7 @@ public class SiddhiSampleApp1 {
                         + "insert into#tempStream;\n"
                         + "\n"
                         + "from#tempStream#window.length(10)\n"
-                        + "select SerialNo, deviceId, time:timestampInMilliseconds() as timeStamp, max(price) as "
+                        + "select SerialNo, deviceId,  timeStamp, max(price) as "
                         + "Price, weight\n"
                         + "insert into outputStream;\n"
                         + "end;";
@@ -192,35 +192,35 @@ public class SiddhiSampleApp1 {
                         + "insert into#tempStream;\n"
                         + "\n"
                         + "from#tempStream#window.length(10)\n"
-                        + "select SerialNo, deviceId, time:timestampInMilliseconds() as timeStamp, max(price) as "
+                        + "select SerialNo, deviceId,  timeStamp, max(price) as "
                         + "Price, weight\n"
                         + "insert into outputStream;\n"
                         + "end;";
 
 
-        String siddhiApp8 =
-                "@source(type='kafka', topic.list='kafka_topic0', partition.no.list='0', threading.option='single"
-                        + ".thread', group.id=\"group\", bootstrap.servers='localhost:9092', @map(type='json'))\n"
-                        + "\n"
-                        + "define stream inputStream(SerialNo int, price double, deviceId string, weight double, "
-                        + "timeStamp long);\n"
-                        + "@sink(type='kafka', topic='kafka_result3', bootstrap.servers='localhost:9092', "
-                        + "partition.no='0', @map(type='json'))\n"
-                        + "define stream outputStream (SerialNo float,"
-                        + "idx string, timeStamp long, SiddhiID string);"
-                        + "\n"
-                        + "@info(name= \"query1\")\n"
-                        + "from inputStream#log('kafka_topic0--- 0 ')\n"
-                        + "select SerialNo,"
-                        + "idx, timeStamp, '8' as SiddhiID\n"
-                        + "insert into outputStream;";
+//        String siddhiApp8 =
+//                "@source(type='kafka', topic.list='kafka_topic0', partition.no.list='0', threading.option='single"
+//                        + ".thread', group.id=\"group\", bootstrap.servers='localhost:9092', @map(type='json'))\n"
+//                        + "\n"
+//                        + "define stream inputStream(SerialNo int, price double, deviceId string, weight double, "
+//                        + "timeStamp long);\n"
+//                        + "@sink(type='kafka', topic='kafka_result3', bootstrap.servers='localhost:9092', "
+//                        + "partition.no='0', @map(type='json'))\n"
+//                        + "define stream outputStream (SerialNo float,"
+//                        + "idx string, timeStamp long, SiddhiID string);"
+//                        + "\n"
+//                        + "@info(name= \"query1\")\n"
+//                        + "from inputStream#log('kafka_topic0--- 0 ')\n"
+//                        + "select SerialNo,"
+//                        + "idx, timeStamp, '8' as SiddhiID\n"
+//                        + "insert into outputStream;";
 
 
         App app0 = new App(siddhiApp0);
         App app1 = new App(siddhiApp1);
         App app2 = new App(siddhiApp2);
         App app3 = new App(siddhiApp3);
-        App appmid = new App(siddhiAppMid);
+        App appMid = new App(siddhiAppMid);
         App app4 = new App(siddhiApp4);
         App app5 = new App(siddhiApp5);
         App app6 = new App(siddhiApp6);
@@ -233,7 +233,7 @@ public class SiddhiSampleApp1 {
         app2.start();
         app3.start();
         app4.start();
-        appmid.start();
+        appMid.start();
         app5.start();
         app6.start();
         app7.start();

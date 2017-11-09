@@ -1,0 +1,5 @@
+Join in single node  _run.sh_ script
+Run _client.sh_ script
+Run _producer.sh_ script
+Output will be written to a file. 
+You can Check the order using _test.sh_ script

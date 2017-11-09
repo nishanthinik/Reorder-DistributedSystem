@@ -69,8 +69,12 @@ public class KafkaProducer2 extends Thread {
                 Iterator<String> it = messagesList.iterator();
                 while (true) {
                     String message = messagesList.take();
-                    Integer key = rnd.nextInt(parts);
-
+                    Integer key;
+                    if (parts > 1) {
+                        key = rnd.nextInt(parts);
+                    } else {
+                        key = 0;
+                    }
                     partitionNo = key.toString();
                     if (parts == 5) {
                         log.info(

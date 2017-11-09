@@ -34,7 +34,7 @@ public class TestOutput {
     private static final Logger log = Logger.getLogger(TestOutput.class);
 
     private static String filePath = "/home/nishanthini/Project/MyProject/Reorder-DistributedSystem/Join"
-            + "/x.txt";
+            + "/b.txt";
 
 
     public static void main(String[] args) {
@@ -59,8 +59,9 @@ public class TestOutput {
                     log.info("Ok" + s1);
                     cmp = s1;
                 } else if (cmp < s1) {
-                    log.info("Ok" + s1);
-                } else if (cmp > s1) {
+                    log.info("Ok  ---" + s1 + " cmp ---" + cmp);
+                    cmp = s1;
+                } else if (cmp >= s1) {
                     log.info("Error Found. Not In order" + s1);
                     break;
                 }

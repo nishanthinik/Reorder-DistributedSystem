@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -17,6 +17,8 @@
         <module>Pattern</module>
         <module>Filter-Aggregations</module>
         <module>Join</module>
+        <module>Join-Parallel</module>
+        <module>Sample</module>
     </modules>
 
     <dependencies>
@@ -24,6 +26,11 @@
             <groupId>org.apache.avro</groupId>
             <artifactId>avro</artifactId>
             <version>1.7.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.extension.siddhi.execution.time</groupId>
+            <artifactId>siddhi-execution-time</artifactId>
+            <version>4.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.hdrhistogram</groupId>
@@ -66,24 +73,24 @@
             <version>2.8</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.siddhi</groupId>
-            <artifactId>siddhi-core</artifactId>
-            <version>4.0.0-M23-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka_2.10</artifactId>
             <version>0.9.0.1</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.siddhi</groupId>
-            <artifactId>siddhi-core</artifactId>
-            <version>4.0.0-M23-SNAPSHOT</version>
+            <groupId>org.wso2.extension.siddhi.io.kafka</groupId>
+            <artifactId>siddhi-io-kafka</artifactId>
+            <version>4.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.extension.siddhi.map.json</groupId>
+            <artifactId>siddhi-map-json</artifactId>
+            <version>4.0.10</version>
         </dependency>
 
     </dependencies>
     <properties>
-        <siddhi.version>4.0.0-M22</siddhi.version>
+        <siddhi.version>4.0.0-alpha6</siddhi.version>
         <log4j.version>1.2.17.wso2v1</log4j.version>
         <guava.version>19.0</guava.version>
         <json.version>2.3.2</json.version>

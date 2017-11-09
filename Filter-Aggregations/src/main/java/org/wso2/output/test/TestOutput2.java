@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Data loader for EDGAR log files.
+ * Output Tester for EDGAR log files.
  */
 public class TestOutput2 {
     private static final Logger log = Logger.getLogger(TestOutput2.class);
@@ -61,6 +61,7 @@ public class TestOutput2 {
                     cmp = s1;
                 } else if (cmp <= s1) {
                     log.info("Ok" + s1);
+                    cmp = s1;
                 } else if (cmp > s1) {
                     log.info("Error Found. Not In order" + s1);
                     break;

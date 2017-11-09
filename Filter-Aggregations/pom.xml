@@ -60,9 +60,19 @@
             <artifactId>kafka_2.10</artifactId>
             <version>0.9.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.wso2.extension.siddhi.io.kafka</groupId>
+            <artifactId>siddhi-io-kafka</artifactId>
+            <version>4.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.extension.siddhi.map.json</groupId>
+            <artifactId>siddhi-map-json</artifactId>
+            <version>4.0.10</version>
+        </dependency>
     </dependencies>
     <properties>
-        <siddhi.version>4.0.0-M22</siddhi.version>
+        <siddhi.version>4.0.0-alpha6</siddhi.version>
         <log4j.version>1.2.17.wso2v1</log4j.version>
         <guava.version>19.0</guava.version>
         <json.version>2.3.2</json.version>

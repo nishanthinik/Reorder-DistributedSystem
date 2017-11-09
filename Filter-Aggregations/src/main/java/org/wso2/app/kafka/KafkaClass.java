@@ -76,45 +76,22 @@ public class KafkaClass {
         KafkaProducer2 kafkaProducerMid2 = new KafkaProducer2(orderedListMidOut, "kafka_mid", 3);
         kafkaProducerMid2.start();
 
-//        Reorder reorder1 = new Reorder(eventsList0, eventsList1, orderedList01, 2, "01");
-//        Reorder reorder2 = new Reorder(eventsList2, eventsList3, orderedList23, 2, "23");
-//        reorder1.start();
-//        reorder2.start();
-
-//        KafkaProducer2 kp1 = new KafkaProducer2(orderedList01, "kafka_topic2", 1);
-//        KafkaProducer2 kp2 = new KafkaProducer2(orderedList23, "kafka_topic1", 2);
-//        KafkaProducer2 kp3 = new KafkaProducer2(eventsList4, "kafka_topic0", 1);
-//        kp1.start();
-//        kp2.start();
-//        kp3.start();
-//
-//
-//
         KafkaReceiver kr5 = new KafkaReceiver(eventsList5, "kafka_result0", 0);
         KafkaReceiver kr6 = new KafkaReceiver(eventsList6, "kafka_result1", 0);
         KafkaReceiver kr7 = new KafkaReceiver(eventsList7, "kafka_result2", 0);
-//        KafkaReceiver kr8 = new KafkaReceiver(eventsList8, "kafka_result3", 0);
         kr5.start();
         kr6.start();
         kr7.start();
-//        kr8.start();
-//
-//        Reorder reorder3 = new Reorder(eventsList5, eventsList6, orderedList23, 2, "  57");
-//        Reorder reorder4 = new Reorder(orderedList23, eventsList7, orderedListFinal, 2, "68");
-////        Reorder reorder5 = new Reorder(orderedList57, orderedList68, orderedListFinal,4, " Final Order");
+
         Reorder reorder = new Reorder(eventsList5, eventsList6, eventsList7,
                                       orderedListFinal, 3, " Final Order");
-//
-//        reorder3.start();
-//        reorder4.start();
-//////        reorder5.start();
         reorder.start();
 
-//        ReadData rd = new ReadData(orderedList23, "Final------------23");
-//        ReadData rd2 = new ReadData(orderedList01, "Final*************01");
-        ReadData rdFinal = new ReadData(orderedListFinal, "----------------------Final");
-//        rd.start();
-//        rd2.start();
-        rdFinal.start();
+
+//        ReadData rdFinal = new ReadData(orderedListFinal, "----------------------Final");
+//        rdFinal.start();
+        WriteToFile wf = new WriteToFile(orderedListFinal, "Final ");
+        wf.start();
     }
+
 }
