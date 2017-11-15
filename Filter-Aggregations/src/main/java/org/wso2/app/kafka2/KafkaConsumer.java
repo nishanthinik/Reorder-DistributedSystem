@@ -15,26 +15,27 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+package org.wso2.app.kafka2;
 
-package org.wso2.sp.sample.kafka;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * DataReceiverMain Class for kafka.
+ * Class for Kafka Consumer.
  */
-public class DataReceiver extends Thread {
-    private static volatile LinkedBlockingQueue<String> eventsList = new LinkedBlockingQueue<>();
+public class KafkaConsumer {
+
+    private static volatile LinkedBlockingQueue<String> eventsList0 = new LinkedBlockingQueue<>();
 
     public static void main(String[] args) {
 
-        KafkaReceiver kafkaReceiver = new KafkaReceiver(eventsList, "kafka_result_pattern", 0);
-        kafkaReceiver.start();
-//        Order order = new Order(eventsList);
-//        order.start();
-//        ReadData rd = new ReadData(eventsList, "final");
-//        rd.start();
-        WriteToFile wf = new WriteToFile(eventsList, "b.txt");
+
+        KafkaReceiver kr0 = new KafkaReceiver(eventsList0, "kafka_result_topic", 0);
+        kr0.start();
+
+
+        WriteToFile wf = new WriteToFile(eventsList0, "Final ");
         wf.start();
     }
+
 }

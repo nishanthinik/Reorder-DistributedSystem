@@ -33,16 +33,17 @@ import java.io.InputStreamReader;
 public class TestOutput2 {
     private static final Logger log = Logger.getLogger(TestOutput2.class);
 
-    private static String filePath = "/home/nishanthini/Project/SampleTh/Siddhi4_Sample1"
-            + "/a.txt";
-
 
     public static void main(String[] args) {
+        String fileName = args[0];
+        String filePath = "/home/nishanthini/Project/MyProject/Reorder-DistributedSystem/Join-Parallel/"
+                + fileName;
         BufferedReader bufferedReader = null;
         try {
             String line;
-            String[] events1, serialNo1;
-            long s1;
+            String[] events1, serialNo1, timestamp1;
+            long t1;
+            double s1;
 
             FileInputStream fstream = new FileInputStream(filePath);
             bufferedReader = new BufferedReader(new InputStreamReader(fstream, Charsets.UTF_8));
@@ -51,19 +52,28 @@ public class TestOutput2 {
             int i = 0;
             long cmp = 0;
             while ((line = bufferedReader.readLine()) != null) {
+                String[] lines = line.split("," + "\\{");
+                for (int j = 0; j < lines.length; j++) {
 
-                events1 = line.split(",");
-                serialNo1 = events1[2].split(":");
-                s1 = Long.parseLong(serialNo1[1]);
 
-                if (i == 0) {
-                    log.info("Ok" + s1);
-                    cmp = s1;
-                } else if (cmp <= s1) {
-                    log.info("Ok" + s1);
-                } else if (cmp > s1) {
-                    log.info("Error Found. Not In order" + s1);
-                    break;
+                    events1 = lines[j].split(",");
+//                    log.info(lines[j]);
+                    timestamp1 = events1[4].split(":");
+                    t1 = Long.parseLong(timestamp1[1]);
+
+                    serialNo1 = events1[0].split(":");
+                    s1 = Double.parseDouble(serialNo1[2]);
+//                        log.info(s1);
+                    if (i == 0) {
+                        log.info("Ok" + s1 + "  -- " + t1);
+                        cmp = t1;
+                    } else if (cmp <= t1) {
+                        log.info("Ok" + s1 + "  -- " + t1);
+                        cmp = t1;
+                    } else if (cmp > t1) {
+                        log.info("Error Found. Not In order" + s1 + "  -- " + t1);
+                        Thread.sleep(100);
+                    }
                 }
                 i++;
 
@@ -72,6 +82,8 @@ public class TestOutput2 {
             log.error("Error in accessing the input file. " + e.getMessage(), e);
         } catch (IOException e2) {
             log.error("Error in accessing the input file. " + e2.getMessage(), e2);
+        } catch (InterruptedException e1) {
+            log.error("Error in Thread " + e1.getMessage(), e1);
         } finally {
             if (bufferedReader != null) {
                 try {

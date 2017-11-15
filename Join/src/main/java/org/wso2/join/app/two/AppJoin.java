@@ -48,20 +48,20 @@ public class AppJoin {
 
                         + "@sink(type='kafka', topic='kafka_result_join', bootstrap.servers='localhost:9092', "
                         + "partition.no='0', @map(type='json'))\n"
-                        + "define stream outputStream(SerialNo string, deviceId string, timeStamp long, timeStampTwo "
+                        + "define stream outputStream(SerialNo double, deviceId string, timeStamp long, timeStampTwo "
                         + "long, timeStampFinal long, SerialNoTwo int);\n"
                         + "\n"
 
                         + "@info(name = 'query1')\n"
-                        + "\tfrom inputStream#window.time(10 sec) as a inner join secondStream#window.length(10) "
+                        + "\tfrom inputStream#window.length(10) as a inner join secondStream#window.length(10) "
                         + "as b \n"
                         + "\ton (a.deviceId == (b.deviceId))\n"
-                        + "\tselect convert(a.SerialNo, 'string') as SerialNo, b.deviceId, a.timeStamp, a.price "
+                        + "\tselect convert(a.SerialNo, 'double') as SerialNo, b.deviceId, a.timeStamp, a.price "
                         + "as Price, b.timeStamp as timeStampTwo, b.SerialNo as SerialNoTwo, "
                         + "time:timestampInMilliseconds() as timeStampFinal\n"
                         + "\tinsert into#barStream;\n"
 
-                        + "\tfrom#barStream#reorder:duplicate(SerialNo, 1000)\n"
+                        + "\tfrom#barStream#reorder:duplicate(SerialNo)\n"
                         + "\tselect SerialNo, deviceId, timeStamp, timeStampTwo, time:timestampInMilliseconds() as "
                         + "timeStampFinal, SerialNoTwo  "
                         + "insert into outputStream";

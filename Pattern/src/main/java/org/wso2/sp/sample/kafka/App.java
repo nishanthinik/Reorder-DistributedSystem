@@ -24,7 +24,8 @@ import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.stream.output.StreamCallback;
 import org.wso2.siddhi.core.util.EventPrinter;
-import org.wso2.sp.sample.kafka.utils.AlphaKSlackExtension;
+//import org.wso2.sp.sample.kafka.utils.AlphaKSlackExtension;
+import org.wso2.sp.sample.kafka.utils.KSlackExtension;
 
 
 /**
@@ -43,11 +44,12 @@ public class App {
                         + "define stream inputStream(SerialNo int, price double, deviceId string, weight double, "
                         + "timeStamp long);\n"
                         + "\n"
+
                         + "@sink(type='kafka', topic='kafka_result_pattern', bootstrap.servers='localhost:9092', "
                         + "partition.no='0', @map(type='json'))\n"
                         + "define stream outputStream(SerialNo1 long, SerialNo2 long, deviceId1 string, "
                         + "finalPrice double, timeStamp long);\n"
-                        + "\n"
+
                         + "\n"
                         + "@info(name = 'query1')\n"
                         + "from  every (e1=inputStream) -> e2=inputStream[e1.deviceId == deviceId and (e1.price + "
@@ -58,12 +60,14 @@ public class App {
                         + "e2.deviceId as deviceId2, e1.price as initialPrice, e2.price as finalPrice, e1.timeStamp\n"
                         + "insert into#tempStream;\n"
                         + "\n"
-                        + "from#tempStream#reorder:akslack(SerialNo1, finalPrice, 10l)\n"
+
+                        + "from#tempStream#reorder:kslack(timeStamp, 1000l)\n"
                         + "select SerialNo1, SerialNo2, deviceId1, finalPrice, timeStamp\n"
                         + "insert into outputStream;\n";
         SiddhiManager siddhiManager = new SiddhiManager();
 
-        siddhiManager.setExtension("reorder:akslack", AlphaKSlackExtension.class);
+//        siddhiManager.setExtension("reorder:akslack", AlphaKSlackExtension.class);
+        siddhiManager.setExtension("reorder:kslack", KSlackExtension.class);
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(siddhiApp);
         siddhiAppRuntime.addCallback("outputStream", new StreamCallback() {
             @Override

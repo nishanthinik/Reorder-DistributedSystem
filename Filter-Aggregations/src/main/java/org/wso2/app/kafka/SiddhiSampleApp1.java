@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.app.query;
+package org.wso2.app.kafka;
 
 import org.apache.log4j.Logger;
 

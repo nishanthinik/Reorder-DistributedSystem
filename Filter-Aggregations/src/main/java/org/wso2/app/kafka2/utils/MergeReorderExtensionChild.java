@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.join.app.two.utils;
+package org.wso2.app.kafka2.utils;
 
 import org.apache.log4j.Logger;
 import org.wso2.siddhi.annotation.Example;
@@ -40,6 +40,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+
+//import org.wso2.siddhi.core.event.ComplexEvent;
 
 /**
  * The following code conducts reordering of an out-of-order event stream.
@@ -49,7 +52,7 @@ import java.util.Map;
         name = "reorder",
         namespace = "duplicate",
         description = "This stream processor extension performs reordering of an out-of-order event stream by "
-                + "putting a sequential Number for the newly created joined Events"
+                + "eliminating duplicates"
                 + ".\n",
         parameters = {
                 @Parameter(name = "serial.no",
@@ -64,12 +67,11 @@ import java.util.Map;
                         "insert into outputStream;",
                 description = "This query performs reordering based on the 'serialNo' attribute value")
 )
-public class DuplicateExtension extends StreamProcessor {
+public class MergeReorderExtensionChild extends StreamProcessor {
 
-    private static final Logger log = Logger.getLogger(DuplicateExtension.class);
+    private static final Logger log = Logger.getLogger(MergeReorderExtensionChild.class);
     private ExpressionExecutor serialNoExecutor;
-    private double times = 0;
-    private double lastSentSerialNo = 0.0;
+    private TreeMap<Double, StreamEvent> treeMap;
 
     @Override
     public void start() {
@@ -96,41 +98,18 @@ public class DuplicateExtension extends StreamProcessor {
 
         while (streamEventChunk.hasNext()) {
 
-            ComplexEventChunk<StreamEvent> complexEventChunk = new ComplexEventChunk<StreamEvent>(false);
+//            ComplexEventChunk<StreamEvent> complexEventChunk = new ComplexEventChunk<StreamEvent>(false);
             StreamEvent event = streamEventChunk.next();
 
             synchronized (this) {
 
                 streamEventChunk.remove();
-                //We might have the rest of the events linked to this event forming a chain.
 
-                double serialNo;
                 Object[] data = event.getOutputData();
-                if (data[0] == null) {
-                    times++;
-                    serialNo = lastSentSerialNo + (0.000001 * times);
-                } else {
-                    serialNo = (Double) serialNoExecutor.execute(event);
-                    double difference = (serialNo - lastSentSerialNo);
-                    if (difference == 0) {
-                        times++;
-                        serialNo = lastSentSerialNo + (0.000001 * times);
-
-                    } else if (serialNo < lastSentSerialNo) {
-                        times++;
-                        serialNo = lastSentSerialNo + (0.000001 * times);
-                    } else {
-                        times = 0;
-                        lastSentSerialNo = serialNo;
-
-                    }
-                }
-
-                data[0] = serialNo;
-                event.setOutputData(data);
-                complexEventChunk.add(event);
-                nextProcessor.process(complexEventChunk);
+                double serialNo = Double.parseDouble(serialNoExecutor.execute(event).toString());
+                treeMap.put(serialNo, event);
             }
+
 
         }
     }
@@ -140,13 +119,14 @@ public class DuplicateExtension extends StreamProcessor {
                                    ConfigReader configReader, SiddhiAppContext siddhiAppContext) {
         ArrayList<Attribute> attributes = new ArrayList<Attribute>();
 
-        if (attributeExpressionLength > 1) {
+        if (attributeExpressionLength > 2) {
             throw new SiddhiAppCreationException("Maximum four input parameters can be specified for duplicate. " +
                                                          " SerialNo field (double). But found "
                                                          +
                                                          attributeExpressionLength + " attributes.");
         }
 
+        //This is the most basic case. Here we do not use a timer. The basic K-slack algorithm is implemented.
         if (attributeExpressionExecutors.length == 1) {
             if (attributeExpressionExecutors[0].getReturnType() == Attribute.Type.DOUBLE) {
                 serialNoExecutor = attributeExpressionExecutors[0];
@@ -160,7 +140,10 @@ public class DuplicateExtension extends StreamProcessor {
                                                              +
                                                              attributeExpressionExecutors[0].getReturnType());
             }
+            //In the following case we have the timer operating in background. But we do not impose a K-slack window
+            // length.
         }
+
 
         if (attributeExpressionExecutors[0].getReturnType() == Attribute.Type.DOUBLE) {
             serialNoExecutor = attributeExpressionExecutors[0];

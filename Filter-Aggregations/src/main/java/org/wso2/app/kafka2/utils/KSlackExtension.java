@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.join.app.two.utils;
+package org.wso2.app.kafka2.utils;
 
 import org.wso2.siddhi.annotation.Example;
 import org.wso2.siddhi.annotation.Extension;

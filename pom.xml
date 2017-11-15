@@ -87,6 +87,11 @@
             <artifactId>siddhi-map-json</artifactId>
             <version>4.0.10</version>
         </dependency>
+        <dependency>
+            <groupId>org.wso2.extension.siddhi.execution.reorder</groupId>
+            <artifactId>siddhi-execution-reorder</artifactId>
+            <version>4.0.11</version>
+        </dependency>
 
     </dependencies>
     <properties>

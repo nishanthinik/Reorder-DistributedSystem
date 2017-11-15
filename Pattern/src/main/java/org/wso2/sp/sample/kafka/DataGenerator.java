@@ -70,7 +70,7 @@ public class DataGenerator extends Thread {
 
             try {
                 messagesList.put(jsonMain.toString());
-                        Thread.sleep(10);
+//                        Thread.sleep(10);
 //                        if (sleepTime >= 1000) {
 //
 //                            sleepTime = 0;

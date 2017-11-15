@@ -68,5 +68,6 @@
     <orderEntry type="library" name="Maven: net.minidev:json-smart:2.1.0" level="project" />
     <orderEntry type="library" name="Maven: net.minidev:asm:1.0.2" level="project" />
     <orderEntry type="library" name="Maven: asm:asm:3.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.wso2.extension.siddhi.execution.reorder:siddhi-execution-reorder:4.0.11" level="project" />
   </component>
 </module>

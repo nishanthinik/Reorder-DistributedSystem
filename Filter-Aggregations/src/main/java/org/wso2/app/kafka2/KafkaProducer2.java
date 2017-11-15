@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.join.app.two;
+package org.wso2.app.kafka2;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -70,16 +70,16 @@ public class KafkaProducer2 extends Thread {
                 while (true) {
                     String message = messagesList.take();
                     Integer key;
-                    if (parts > 0) {
+                    if (parts > 1) {
                         key = rnd.nextInt(parts);
                     } else {
                         key = 0;
                     }
-
                     partitionNo = key.toString();
-
+                    if (parts == 5) {
                         log.info(
                                 "Sending " + message + " on topic: " + topicName + " to partition: " + partitionNo);
+                    }
                     producer2.send(new ProducerRecord<>(topicName, key, "Producer", message));
                 }
 

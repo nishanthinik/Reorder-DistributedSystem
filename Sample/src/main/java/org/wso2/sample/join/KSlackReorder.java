@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.join.app.two;
+package org.wso2.sample.join;
 
 import org.apache.log4j.Logger;
 

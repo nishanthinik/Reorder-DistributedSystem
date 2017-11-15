@@ -15,9 +15,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.join.app.parallel;
+package org.wso2.join.app.two;
 
-import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.log4j.Logger;
@@ -30,14 +29,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * Class for Kafka Producer.
  */
-public class KafkaProducer2 extends Thread {
-    private static Logger log = Logger.getLogger(KafkaProducer2.class);
+public class KafkaProducer extends Thread {
+    private static Logger log = Logger.getLogger(KafkaProducer.class);
     private volatile LinkedBlockingQueue<String> messagesList;
 
     private String topicName;
     private int parts;
 
-    KafkaProducer2(LinkedBlockingQueue<String> messagesList, String topicName, int parts) {
+    KafkaProducer(LinkedBlockingQueue<String> messagesList, String topicName, int parts) {
         this.messagesList = messagesList;
         this.topicName = topicName;
         this.parts = parts;
@@ -59,7 +58,7 @@ public class KafkaProducer2 extends Thread {
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         log.info("Initializing producer2");
 
-        Producer<String, String> producer2 = new KafkaProducer<>(props);
+        Producer<String, String> producer2 = new org.apache.kafka.clients.producer.KafkaProducer(props);
         Random rnd = new Random();
         if (!"".equalsIgnoreCase("0001")) {
 

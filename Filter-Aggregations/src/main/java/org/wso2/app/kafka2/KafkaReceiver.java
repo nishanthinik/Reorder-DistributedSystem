@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.join.app.two;
+package org.wso2.app.kafka2;
 
 import org.apache.kafka.clients.consumer.CommitFailedException;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -63,6 +63,7 @@ public class KafkaReceiver extends Thread {
 
         KafkaConsumer<byte[], byte[]> consumer = new KafkaConsumer<>(props);
         TopicPartition partition = new TopicPartition(topicName, partitionNo);
+        pNo = String.valueOf(partitionNo);
         partitionsList.add(partition);
         consumer.assign(partitionsList);
 
@@ -71,8 +72,8 @@ public class KafkaReceiver extends Thread {
             try {
                 for (ConsumerRecord record : records) {
                     String event = record.value().toString();
-//                    log.info(event);
                     eventsList.put(event);
+
                 }
             } catch (InterruptedException e1) {
                 log.error("Error " + e1.getMessage(), e1);
