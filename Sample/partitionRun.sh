@@ -1,2 +1,2 @@
 #!/bin/bash
-java -XX:+UnlockCommercialFeatures -Xmx8g -Xms8g -cp .:target/Sample-1.0-SNAPSHOT-jar-with-dependencies.jar:lib/siddhi-core-4.0.0-alpha6.jar:lib/siddhi-io-kafka-4.0.3.jar:lib/siddhi-execution-time-4.0.3.jar:lib/siddhi-map-json-4.0.10.jar:lib/kafka-clients-0.9.0.1.jar org.wso2.sample.partition.App
+java -XX:+UnlockCommercialFeatures -Xmx8g -Xms8g -cp .:target/Sample-1.0-SNAPSHOT-jar-with-dependencies.jar:lib/siddhi-core-4.0.0-beta.jar:lib/siddhi-execution-time-4.0.3.jar:lib/siddhi-execution-performance-4.0.4-SNAPSHOT.jar:lib/siddhi-map-json-4.0.10.jar:lib/kafka-clients-0.9.0.1.jar:lib/siddhi-io-kafka-4.1.0.jar org.wso2.sample.partition.App

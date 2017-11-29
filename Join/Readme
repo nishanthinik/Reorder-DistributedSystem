@@ -1,5 +1,26 @@
-Join in single node  _run.sh_ script
-Run _client.sh_ script
-Run _producer.sh_ script
+Join for single stream  
+without partition
+    _SingleRun.sh_ script
+with partition 
+    _SingleRun.sh_ script
+    
+    
+Run _SingleClient.sh_ script - receive data
+Run _SingleProducer.sh_ script - publish data to kafka
+Output will be written to a file. 
+You can Check the order using _test.sh_ script
+
+
+
+Join for two streams 
+without partition
+    _TwoRun.sh_ script
+with partition 
+    _TwoRun.sh_ script
+    
+    
+Run _TwoClient.sh_ script - receive data
+Run _TwoProducer.sh_ script - publish data to kafka
+
 Output will be written to a file. 
 You can Check the order using _test.sh_ script

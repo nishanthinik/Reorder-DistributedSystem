@@ -21,9 +21,9 @@ package org.wso2.sp.sample.kafka;
 import org.apache.log4j.Logger;
 import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
-import org.wso2.siddhi.core.event.Event;
-import org.wso2.siddhi.core.stream.output.StreamCallback;
-import org.wso2.siddhi.core.util.EventPrinter;
+//import org.wso2.siddhi.core.event.Event;
+//import org.wso2.siddhi.core.stream.output.StreamCallback;
+//import org.wso2.siddhi.core.util.EventPrinter;
 //import org.wso2.sp.sample.kafka.utils.AlphaKSlackExtension;
 import org.wso2.sp.sample.kafka.utils.KSlackExtension;
 
@@ -66,15 +66,14 @@ public class App {
                         + "insert into outputStream;\n";
         SiddhiManager siddhiManager = new SiddhiManager();
 
-//        siddhiManager.setExtension("reorder:akslack", AlphaKSlackExtension.class);
         siddhiManager.setExtension("reorder:kslack", KSlackExtension.class);
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(siddhiApp);
-        siddhiAppRuntime.addCallback("outputStream", new StreamCallback() {
-            @Override
-            public void receive(Event[] events) {
-                EventPrinter.print(events);
-            }
-        });
+//        siddhiAppRuntime.addCallback("outputStream", new StreamCallback() {
+//            @Override
+//            public void receive(Event[] events) {
+//                EventPrinter.print(events);
+//            }
+//        });
         siddhiAppRuntime.start();
     }
 }

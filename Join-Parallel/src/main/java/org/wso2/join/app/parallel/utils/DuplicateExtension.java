@@ -41,8 +41,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//import org.wso2.siddhi.core.event.ComplexEvent;
-
 /**
  * The following code conducts reordering of an out-of-order event stream.
  * This implements the elimination of Duplicates.
@@ -51,7 +49,7 @@ import java.util.Map;
         name = "reorder",
         namespace = "duplicate",
         description = "This stream processor extension performs reordering of an out-of-order event stream by "
-                + "eliminating duplicates"
+                + "putting a sequential Number for the newly created joined Events"
                 + ".\n",
         parameters = {
                 @Parameter(name = "serial.no",
@@ -70,7 +68,7 @@ public class DuplicateExtension extends StreamProcessor {
 
     private static final Logger log = Logger.getLogger(DuplicateExtension.class);
     private ExpressionExecutor serialNoExecutor;
-    private double times = 1;
+    private double times = 0;
     private double lastSentSerialNo = 0.0;
 
     @Override
@@ -102,7 +100,6 @@ public class DuplicateExtension extends StreamProcessor {
             StreamEvent event = streamEventChunk.next();
 
             synchronized (this) {
-//                if (event.getType() != ComplexEvent.Type.TIMER) {
 
                 streamEventChunk.remove();
                 //We might have the rest of the events linked to this event forming a chain.
@@ -113,7 +110,7 @@ public class DuplicateExtension extends StreamProcessor {
                     times++;
                     serialNo = lastSentSerialNo + (0.000001 * times);
                 } else {
-                    serialNo = Double.parseDouble(serialNoExecutor.execute(event).toString());
+                    serialNo = (Double) serialNoExecutor.execute(event);
                     double difference = (serialNo - lastSentSerialNo);
                     if (difference == 0) {
                         times++;
@@ -128,20 +125,12 @@ public class DuplicateExtension extends StreamProcessor {
 
                     }
                 }
-//                serialNo = Double.parseDouble(serialNoExecutor.execute(event).toString());
-//            try {
-//                Thread.sleep(3);
-//            } catch (InterruptedException e) {
-//                log.error("Error " + e.getMessage(), e);
-//            }
+
                 data[0] = serialNo;
                 event.setOutputData(data);
-
-//
+                complexEventChunk.add(event);
+                nextProcessor.process(complexEventChunk);
             }
-            complexEventChunk.add(event);
-            nextProcessor.process(complexEventChunk);
-
 
         }
     }
@@ -151,17 +140,13 @@ public class DuplicateExtension extends StreamProcessor {
                                    ConfigReader configReader, SiddhiAppContext siddhiAppContext) {
         ArrayList<Attribute> attributes = new ArrayList<Attribute>();
 
-        if (attributeExpressionLength > 4) {
+        if (attributeExpressionLength > 1) {
             throw new SiddhiAppCreationException("Maximum four input parameters can be specified for duplicate. " +
-                                                         " SerialNo field (double), k-slack buffer expiration "
-                                                         + "time-out window (long), Max_K size (long), "
-                                                         + "and boolean  flag to indicate whether the late events "
-                                                         + "should get discarded. But found "
+                                                         " SerialNo field (double). But found "
                                                          +
                                                          attributeExpressionLength + " attributes.");
         }
 
-        //This is the most basic case. Here we do not use a timer. The basic K-slack algorithm is implemented.
         if (attributeExpressionExecutors.length == 1) {
             if (attributeExpressionExecutors[0].getReturnType() == Attribute.Type.DOUBLE) {
                 serialNoExecutor = attributeExpressionExecutors[0];
@@ -175,26 +160,6 @@ public class DuplicateExtension extends StreamProcessor {
                                                              +
                                                              attributeExpressionExecutors[0].getReturnType());
             }
-            //In the following case we have the timer operating in background. But we do not impose a K-slack window
-            // length.
-        } else if (attributeExpressionExecutors.length == 2) {
-            if (attributeExpressionExecutors[0].getReturnType() == Attribute.Type.DOUBLE) {
-                serialNoExecutor = attributeExpressionExecutors[0];
-                attributes.add(new Attribute("beta0", Attribute.Type.DOUBLE));
-            } else if (attributeExpressionExecutors[0].getReturnType() == Attribute.Type.STRING) {
-                serialNoExecutor = attributeExpressionExecutors[0];
-                attributes.add(new Attribute("beta0", Attribute.Type.STRING));
-            } else {
-                throw new SiddhiAppCreationException("Invalid parameter type found for the first argument of " +
-                                                             " reorder:duplicate() function. Required DOUBLE, but "
-                                                             + "found "
-                                                             +
-                                                             attributeExpressionExecutors[0].getReturnType());
-            }
-
-
-            //In the third case we have both the timer operating in the background and we have also specified a K-slack
-            // window length.
         }
 
         if (attributeExpressionExecutors[0].getReturnType() == Attribute.Type.DOUBLE) {

@@ -25,13 +25,16 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class DataProducer extends Thread {
     private static volatile LinkedBlockingQueue<String> messagesList1 = new LinkedBlockingQueue<>();
-    private static volatile LinkedBlockingQueue<String> messagesList2 = new LinkedBlockingQueue<>();
 
-    public static void main(String[] args) {
-        String topicName = "kafka_filter";
+    public static void main(String[] args) throws InterruptedException {
+        String topicName1 = "kafka_topic1";
+        String topicName2 = "kafka_topic2";
+        String topicName3 = "kafka_topic3";
+        String[] topicName = {topicName1, topicName2, topicName3};
 
         DataGenerator dataLoader = new DataGenerator(messagesList1);
-        KafkaProducer2 kafkaProducer1 = new KafkaProducer2(messagesList1, topicName, 5);
+        Thread.sleep(100);
+        KafkaProducer2 kafkaProducer1 = new KafkaProducer2(messagesList1, topicName, 0);
         dataLoader.start();
         kafkaProducer1.start();
     }

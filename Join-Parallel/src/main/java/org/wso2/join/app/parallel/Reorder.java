@@ -77,47 +77,32 @@ public class Reorder extends Thread {
         try {
             synchronized (this) {
 
-                double s1 = 0, s2 = 0, s3 = 0, s4 = 0;
+                double s1, s2, s3 = 0, s4 = 0;
                 String event1 = "", event2 = "", event3 = "", event4 = "";
-                String[] events1, events2, serialNo1, serialNo2, events3, events4, serialNo3, serialNo4;
 
 
                 event1 = inputList1.take();
-                events1 = event1.split(",");
-                serialNo1 = events1[0].split(":");
-                s1 = Double.parseDouble(serialNo1[2]);
-
-
+                s1 = Double.parseDouble((event1.split(","))[0].split(":")[2]);
                 event2 = inputList2.take();
-                events2 = event2.split(",");
-                serialNo2 = events2[0].split(":");
-                s2 = Double.parseDouble(serialNo2[2]);
+                s2 = Double.parseDouble((event2.split(","))[0].split(":")[2]);
 
                 if (listNum >= 3) {
-
                     event3 = inputList3.take();
-                    events3 = event3.split(",");
-                    serialNo3 = events3[0].split(":");
-                    s3 = Double.parseDouble(serialNo3[2]);
-                    if (listNum == 4) {
+                    s3 = Double.parseDouble((event3.split(","))[0].split(":")[2]);
 
+                    if (listNum == 4) {
                         event4 = inputList4.take();
-                        events4 = event4.split(",");
-                        serialNo4 = events4[0].split(":");
-                        s4 = Double.parseDouble(serialNo4[2]);
+                        s4 = Double.parseDouble((event4.split(","))[0].split(":")[2]);
                     }
                 }
 
                 while (true) {
-                    double minNum1, minNum2, minNum;
+                    double minNum;
                     if (listNum == 4) {
-                        minNum1 = min(s1, s2);
-                        minNum2 = min(s3, s4);
-                        minNum = min(minNum1, minNum2);
+                        minNum = min(min(s1, s2), min(s3, s4));
 //                        log.info(minNum + "---------- minNum1");
                     } else if (listNum == 3) {
-                        minNum1 = min(s1, s2);
-                        minNum = min(minNum1, s3);
+                        minNum = min(min(s1, s2), s3);
 //                        log.info(s1 + "---------- s1");
 //                        log.info(s2 + "---------- s2");
 //                        log.info(s3 + "---------- s3");
@@ -133,40 +118,28 @@ public class Reorder extends Thread {
 //                        log.info(s1);
                         outputList.put(event1);
                         event1 = inputList1.take();
-                        events1 = event1.split(",");
-                        serialNo1 = events1[0].split(":");
-                        s1 = Double.parseDouble(serialNo1[2]);
+                        s1 = Double.parseDouble((event1.split(","))[0].split(":")[2]);
 //
                     } else if (minNum == s2) {
 //                        log.info(s2);
                         log.info(event2);
                         outputList.put(event2);
                         event2 = inputList2.take();
-                        events2 = event2.split(",");
-                        serialNo2 = events2[0].split(":");
-                        s2 = Double.parseDouble(serialNo2[2]);
+                        s2 = Double.parseDouble((event2.split(","))[0].split(":")[2]);
                     } else if (listNum >= 3) {
                         if (minNum == s3) {
 //                            log.info(s3);
                             log.info(event3);
                             outputList.put(event3);
                             event3 = inputList3.take();
-                            events3 = event3.split(",");
-                            serialNo3 = events3[0].split(":");
-                            s3 = Double.parseDouble(serialNo3[2]);
+                            s3 = Double.parseDouble((event3.split(","))[0].split(":")[2]);
 
                         } else if (listNum == 4) {
                             if (minNum == s4) {
                                 outputList.put(event4);
                                 event4 = inputList4.take();
-                                events4 = event4.split(",");
-                                serialNo4 = events4[0].split(":");
-                                s4 = Double.parseDouble(serialNo4[2]);
-                                log.info(s4 + "-----------s4");
+                                s4 = Double.parseDouble((event4.split(","))[0].split(":")[2]);
                             }
-                        } else {
-
-                            log.info("hi");
                         }
                     }
                 }

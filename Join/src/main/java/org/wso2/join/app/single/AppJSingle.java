@@ -57,7 +57,7 @@ public class AppJSingle {
                         + "time:timestampInMilliseconds() as timeStampA\n"
                         + "\tinsert into#barStream;\n"
 
-                        + "\tfrom#barStream#reorder:duplicate(SerialNo, 1000)\n"
+                        + "\tfrom#barStream#throughput:throughput(timestamp, )\n"
                         + "\tselect SerialNo, deviceId, timeStamp, timeStampTwo, time:timestampInMilliseconds() as "
                         + "timeStampFinal, SerialNoTwo, timeStampA  "
                         + "insert into outputStream";

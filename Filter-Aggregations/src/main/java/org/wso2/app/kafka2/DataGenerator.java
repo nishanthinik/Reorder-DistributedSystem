@@ -40,20 +40,21 @@ public class DataGenerator extends Thread {
     }
 
     public void run() {
-        int i = 1;
+        Double i = 1.1;
         Random rand = new Random();
         String[] listItem = new String[]{"a", "b", "c", "d", "e"};
         String id = listItem[rand.nextInt(4)];
-        Object[] dataItem = new Object[]{i, rand.nextDouble(), id, rand.nextDouble(), System.currentTimeMillis()};
+        Object[] dataItem =
+                new Object[]{rand.nextDouble(), rand.nextDouble(), id, rand.nextDouble()};
 
-        while (i <= 500000) {
+        while (i <= 500000.0) {
 
             id = listItem[rand.nextInt(4)];
             dataItem[0] = i;
             dataItem[1] = rand.nextDouble();
             dataItem[2] = id;
             dataItem[3] = rand.nextDouble();
-            dataItem[4] = System.currentTimeMillis();
+//            dataItem[4] = System.currentTimeMillis();
 
 
             JSONObject jsonObj = new JSONObject();
@@ -61,7 +62,7 @@ public class DataGenerator extends Thread {
             jsonObj.put("price", dataItem[1]);
             jsonObj.put("deviceId", dataItem[2]);
             jsonObj.put("weight", dataItem[3]);
-            jsonObj.put("timeStamp", dataItem[4]);
+//            jsonObj.put("timeStamp", dataItem[4]);
 
 
             jsonMain.put("event", jsonObj);
@@ -69,11 +70,7 @@ public class DataGenerator extends Thread {
 
             try {
                 messagesList.put(jsonMain.toString());
-                        Thread.sleep(2);
-////                        if (sleepTime >= 1000) {
-////
-////                            sleepTime = 0;
-////                        }
+//                Thread.sleep(2);
             } catch (InterruptedException e1) {
                 log.error("Error " + e1.getMessage(), e1);
             }

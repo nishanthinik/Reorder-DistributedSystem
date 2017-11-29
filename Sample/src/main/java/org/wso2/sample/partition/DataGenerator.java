@@ -45,13 +45,13 @@ public class DataGenerator extends Thread {
         Random rand = new Random();
         String[] listItem = new String[]{"a", "b", "c", "d", "e"};
         String id = listItem[rand.nextInt(4)];
-        Object[] dataItem = new Object[]{i, rand.nextDouble(), id, rand.nextDouble(), System.currentTimeMillis()};
+        Object[] dataItem = new Object[]{i, rand.nextFloat(), id, rand.nextDouble(), System.currentTimeMillis()};
 
         while (i <= 5000000) {
 
             id = listItem[rand.nextInt(4)];
             dataItem[0] = i;
-            dataItem[1] = rand.nextDouble();
+            dataItem[1] = rand.nextFloat();
             dataItem[2] = id;
             dataItem[3] = rand.nextDouble();
             dataItem[4] = System.currentTimeMillis();

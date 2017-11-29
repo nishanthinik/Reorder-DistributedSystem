@@ -70,7 +70,7 @@ public class AppJP {
                         + "end;"
 
                         + "@info(name = 'query2')\n"
-                        + "from fooStream#reorder:duplicate(SerialNo, 1000) "
+                        + "from fooStream#reorder:duplicate(SerialNo) "
                         + "select SerialNo, deviceId, timeStamp, timeStampTwo, time:timestampInMilliseconds() as "
                         + "timeStampFinal, SerialNoTwo, timeStampA, timeStampB "
                         + "insert into outputStream;";

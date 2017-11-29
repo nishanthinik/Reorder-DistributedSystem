@@ -4,14 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.wso2</groupId>
-        <artifactId>wso2</artifactId>
-        <version>5</version>
+        <artifactId>reorder</artifactId>
+        <groupId>org.wso2.siddhi</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>org.wso2.siddhi</groupId>
     <artifactId>Pattern</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+
     <dependencies>
         <dependency>
             <groupId>org.wso2.extension.siddhi.execution.reorder</groupId>
@@ -83,19 +84,14 @@
             <artifactId>commons-math3</artifactId>
             <version>3.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka_2.10</artifactId>
-            <version>0.9.0.1</version>
-        </dependency>
+
     </dependencies>
     <properties>
-        <siddhi.version>4.0.0-alpha6</siddhi.version>
+        <siddhi.version>4.0.0-beta</siddhi.version>
         <log4j.version>1.2.17.wso2v1</log4j.version>
         <guava.version>19.0</guava.version>
         <json.version>2.3.2</json.version>
         <antlr.runtime.version>4.5.1</antlr.runtime.version>
-
         <maven.shadeplugin.version>2.4.1</maven.shadeplugin.version>
     </properties>
     <repositories>
@@ -143,7 +139,6 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-
         <repository>
             <id>sonatype.releases</id>
             <url>https://oss.sonatype.org/content/repositories/releases/</url>

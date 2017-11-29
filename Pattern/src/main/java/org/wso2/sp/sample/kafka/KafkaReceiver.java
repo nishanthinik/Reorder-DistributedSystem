@@ -72,7 +72,7 @@ public class KafkaReceiver extends Thread {
                 for (ConsumerRecord record : records) {
                     String event = record.value().toString();
                     eventsList.put(event);
-                    log.info(event);
+//                    log.info(event);
 
                 }
             } catch (InterruptedException e1) {

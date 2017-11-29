@@ -30,10 +30,6 @@ public class DataReceiver extends Thread {
 
         KafkaReceiver kafkaReceiver = new KafkaReceiver(eventsList, "kafka_result_pattern", 0);
         kafkaReceiver.start();
-//        Order order = new Order(eventsList);
-//        order.start();
-//        ReadData rd = new ReadData(eventsList, "final");
-//        rd.start();
         WriteToFile wf = new WriteToFile(eventsList, "b.txt");
         wf.start();
     }

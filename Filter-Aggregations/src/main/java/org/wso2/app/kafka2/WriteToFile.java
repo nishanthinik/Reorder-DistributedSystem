@@ -59,7 +59,7 @@ public class WriteToFile extends Thread {
             while (true) {
                 String x = orderedList.take();
 
-                log.info(x);
+                log.info(x + m);
                 bufferedWriter.write(x + "\n");
 
 

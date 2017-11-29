@@ -22,6 +22,7 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.log4j.Logger;
 
+//import java.util.Iterator;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Random;
@@ -34,10 +35,10 @@ public class KafkaProducer2 extends Thread {
     private static Logger log = Logger.getLogger(KafkaProducer2.class);
     private volatile LinkedBlockingQueue<String> messagesList;
 
-    private String topicName;
+    private String[] topicName;
     private int parts;
 
-    KafkaProducer2(LinkedBlockingQueue<String> messagesList, String topicName, int parts) {
+    KafkaProducer2(LinkedBlockingQueue<String> messagesList, String[] topicName, int parts) {
         this.messagesList = messagesList;
         this.topicName = topicName;
         this.parts = parts;
@@ -61,26 +62,33 @@ public class KafkaProducer2 extends Thread {
 
         Producer<String, String> producer2 = new KafkaProducer<>(props);
         Random rnd = new Random();
+        Random rnd2 = new Random();
         if (!"".equalsIgnoreCase("0001")) {
 
             String partitionNo;
+            int topic = 0;
             try {
+                int num = topicName.length;
 
                 Iterator<String> it = messagesList.iterator();
-                while (true) {
+                while (it.hasNext()) {
                     String message = messagesList.take();
                     Integer key;
                     if (parts > 1) {
                         key = rnd.nextInt(parts);
                     } else {
                         key = 0;
+                        if (num > 1) {
+                            topic = rnd2.nextInt(num);
+                        }
                     }
                     partitionNo = key.toString();
-                    if (parts == 5) {
+                    if (parts == 0) {
                         log.info(
-                                "Sending " + message + " on topic: " + topicName + " to partition: " + partitionNo);
+                                "Sending " + message + " on topic: " + topicName[topic] + " to partition: "
+                                        + partitionNo);
                     }
-                    producer2.send(new ProducerRecord<>(topicName, key, "Producer", message));
+                    producer2.send(new ProducerRecord<>(topicName[topic], key, "Producer", message));
                 }
 
 

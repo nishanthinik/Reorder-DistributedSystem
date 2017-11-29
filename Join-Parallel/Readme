@@ -1,0 +1,9 @@
+Join in parallel
+    
+    
+Run _run.sh_ script - Query Run
+Run _client.sh_ script - receive data
+Run _producer.sh_ script - publish data to kafka
+
+Output will be written to a file. 
+You can Check the order using _test.sh_ script

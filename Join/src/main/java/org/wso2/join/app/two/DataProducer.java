@@ -34,8 +34,8 @@ public class DataProducer extends Thread {
         DataGenerator dataGenerator = new DataGenerator(messagesList1);
         DataGenerator2 dataGenerator2 = new DataGenerator2(messagesList2);
 
-        KafkaProducer kafkaProducer1 = new KafkaProducer(messagesList1, topicName1, 0);
-        KafkaProducer kafkaProducer2 = new KafkaProducer(messagesList2, topicName2, 0);
+        KafkaProducer2 kafkaProducer1 = new KafkaProducer2(messagesList1, topicName1, 0);
+        KafkaProducer2 kafkaProducer2 = new KafkaProducer2(messagesList2, topicName2, 0);
 
         dataGenerator.start();
         dataGenerator2.start();

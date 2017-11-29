@@ -17,7 +17,6 @@
  */
 package org.wso2.app.kafka2;
 
-
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -26,15 +25,15 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class KafkaConsumer {
 
     private static volatile LinkedBlockingQueue<String> eventsList0 = new LinkedBlockingQueue<>();
+//    private static volatile LinkedBlockingQueue<String> eventsList1 = new LinkedBlockingQueue<>();
+//    private static volatile LinkedBlockingQueue<String> outputList = new LinkedBlockingQueue<>();
 
     public static void main(String[] args) {
 
 
         KafkaReceiver kr0 = new KafkaReceiver(eventsList0, "kafka_result_topic", 0);
         kr0.start();
-
-
-        WriteToFile wf = new WriteToFile(eventsList0, "Final ");
+        WriteToFile wf = new WriteToFile(eventsList0, "Final---1 ");
         wf.start();
     }
 
